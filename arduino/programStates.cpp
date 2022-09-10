@@ -2,10 +2,10 @@
 #include <IRremote.h>
 #include "programStates.hpp"
 
-const int IR_PIN = 2;
+
 
 //************************************************************//
-// initState- initializes the digital inputs for the IR receiver.
+// initState - initializes the digital inputs for the IR receiver.
 //
 //
 //************************************************************//
@@ -13,11 +13,12 @@ void MainStateMachine::initState()
 {
 
     // Initialize the receiver library to read from pin 2.
-    IrReceiver.begin( IR_PIN );
+    IrReceiver.begin(IRremote::IR_PIN);
 
+    // TODO: Initialize motor.
+    
     // Set serial output for debugging.
     Serial.begin(9600);
-
     Serial.println("In INIT_STATE");
 
     // Since we are done initializing. Move onto the idle state.
@@ -54,9 +55,22 @@ void MainStateMachine::decodeState()
 {   
     Serial.println( "DECODE_STATE" );
 
-    Serial.println(IrReceiver.decodedIRData.decodedRawData, HEX);
+    // Pull the raw IR signal from the IrReceiver.
+    uint32_t irSignal( IrReceiver.decodedIRData.decodedRawData ); 
+
+    // Turn that signal into an enum for easier handling.
+    IRremote::RemoteStates state = IRremote::decodeIRSignal( irSignal );
+
+    Serial.println( IRremote::buttonStringMap[state] );
+
+    // TODO: create motor control function and pass the state
+    // enum to it. We can either add states to the mainState machine
+    // or create a separate one for the motor control.
+    // motorControl( irSignal );
     setState( MainStateMachine::IDLE_STATE );  
     delay(2000);
+
+    // Reset the IrReceiver contents to ready for a new signal.
     IrReceiver.resume();
 }
 
@@ -66,7 +80,14 @@ void MainStateMachine::decodeState()
 // 
 // Wakes upon receiving IR signal.
 //************************************************************//
-void SleepState()
+void MainStateMachine::sleepState()
 {
   
 }
+
+
+
+////**************************************************************//
+//// Private functions from here, just used to make the code look
+//// prettier.
+////**************************************************************//
