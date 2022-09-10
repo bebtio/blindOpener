@@ -2,38 +2,20 @@
 #include "programStates.hpp"
 
 
-enum State 
-{
-    _initState,
-    _blinkState,
-    _waitState,
-    rotateCounterClockWiseState,
-    roateClockwiseState
-};
+MainStateMachine mainState;
 
-State currentState = _blinkState;
 
 void setup()
 {
-  initState();
+
 }
 
 void loop()
 {
-    switch( currentState )
+    switch( mainState.currentState )
     {
-        case( _initState ):
-            // Do initialization stuff.
-        break;
-
-        case( _blinkState ):
-          blinkState();
-          currentState = _waitState;
-        break;
-
-        case( _waitState ):
-          waitState();
-          currentState = _blinkState;
-        break;
+        case( MainStateMachine::INIT_STATE  ): mainState.initState();  break;
+        case( MainStateMachine::IDLE_STATE  ): mainState.idleState();  break;
+        case( MainStateMachine::BLINK_STATE ): mainState.blinkState(); break;
     }
 }
