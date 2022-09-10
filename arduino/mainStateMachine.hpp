@@ -28,6 +28,7 @@ public:
       INIT_STATE,
       IDLE_STATE,
       DECODE_STATE,
+      MOTOR_CONTROL_STATE,
       SLEEP_STATE
   };
 
@@ -52,6 +53,7 @@ public:
   void initState();
   void idleState();
   void decodeState();
+  void motorControlState();
   void sleepState();
   
 private:

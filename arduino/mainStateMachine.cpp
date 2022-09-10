@@ -68,20 +68,24 @@ void MainStateMachine::decodeState()
 
     // Turn that signal into an enum for easier handling.
     IRremote::RemoteStates state = IRremote::decodeIRSignal( irSignal );
-
     Serial.println( IRremote::buttonStringMap[state] );
 
-    // TODO: create motor control function and pass the state
-    // enum to it. We can either add states to the mainState machine
-    // or create a separate one for the motor control.
-    // motorControl( irSignal );
-    setState( MainStateMachine::IDLE_STATE );  
+    // TODO: set the motor state variable to the current state.
+    
+    setState( MainStateMachine::MOTOR_CONTROL_STATE );  
     delay(2000);
 
     // Reset the IrReceiver contents to ready for a new signal.
     IrReceiver.resume();
 }
 
+
+void MainStateMachine::motorControlState()
+{
+  Serial.println( "MOTOR_CONTROL_STATE" );
+  
+  setState( MainStateMachine::IDLE_STATE );
+}
 //************************************************************//
 // sleepState() - Puts the arduino asleep after some time of
 // inactivity.
