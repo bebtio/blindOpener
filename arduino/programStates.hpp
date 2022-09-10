@@ -17,7 +17,8 @@ public:
   {
       INIT_STATE,
       IDLE_STATE,
-      BLINK_STATE,
+      DECODE_STATE,
+      SLEEP_STATE
   };
 
   State currentState;
@@ -36,7 +37,8 @@ public:
 
   void initState();
   void idleState();
-  void blinkState();
+  void decodeState();
+  void sleepState();
   
 private:
 

@@ -1,5 +1,7 @@
 
+#include <IRremote.h>
 #include "programStates.hpp"
+
 
 //************************************************************//
 // initState- initializes the digital inputs for the IR receiver.
@@ -8,34 +10,36 @@
 //************************************************************//
 void MainStateMachine::initState()
 {
+
+    // Initialize the receiver library to read from pin 2.
+    IrReceiver.begin(2);
+
     // Set serial output for debugging.
     Serial.begin(9600);
 
-    // Set pin labeled D2 as an input.
-    pinMode( 2 ,INPUT );
-
-    pinMode( LED_BUILTIN, OUTPUT );
-    setState( MainStateMachine::IDLE_STATE );
     Serial.println("In INIT_STATE");
+
+    // Since we are done initializing. Move onto the idle state.
+    setState( MainStateMachine::IDLE_STATE );
 }
 
 //************************************************************//
 // idleState - waits for IR receiver to receive an input signal.
-//
+// 
+// Will put arduino to sleep after it receives no inputs for 
+// 30 seconds.
 //
 //************************************************************//
 void MainStateMachine::idleState()
 {
     Serial.println("In IDLE_STATE");
-    int pinRead = digitalRead(2);
-    Serial.println(pinRead);
 
-    // Pin gets pulled low by the IR receiver?
-    // Yes the IR sensor is active low, meaning it outputs 5V
-    // when it detects nothing and drops when it detects something.
-    if( pinRead == LOW )
+    // Do nothing until we receive a singal to decode.
+    if( IrReceiver.decode() )
     {
-        setState( MainStateMachine::BLINK_STATE );
+        // Move to the decode state to get do something
+        // with the signal.
+        setState( MainStateMachine::DECODE_STATE );
     }
 }
 
@@ -45,17 +49,23 @@ void MainStateMachine::idleState()
 //
 //
 //************************************************************//
-void MainStateMachine::blinkState()
-{
-    Serial.println("In BLINK_STATE");
+void MainStateMachine::decodeState()
+{   
+    Serial.println( "DECODE_STATE" );
 
-    for( int i = 0; i < 5; ++i )
-    {
-      digitalWrite(LED_BUILTIN, HIGH);
-      delay( 500 );
-      digitalWrite(LED_BUILTIN, LOW);
-      delay( 500 );
-    }
-    
-    setState( MainStateMachine::IDLE_STATE );
+    Serial.println(IrReceiver.decodedIRData.decodedRawData, HEX);
+    setState( MainStateMachine::IDLE_STATE );  
+    delay(2000);
+    IrReceiver.resume();
+}
+
+//************************************************************//
+// sleepState() - Puts the arduino asleep after some time of
+// inactivity.
+// 
+// Wakes upon receiving IR signal.
+//************************************************************//
+void SleepState()
+{
+  
 }

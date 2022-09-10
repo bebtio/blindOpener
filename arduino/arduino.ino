@@ -14,8 +14,8 @@ void loop()
 {
     switch( mainState.currentState )
     {
-        case( MainStateMachine::INIT_STATE  ): mainState.initState();  break;
-        case( MainStateMachine::IDLE_STATE  ): mainState.idleState();  break;
-        case( MainStateMachine::BLINK_STATE ): mainState.blinkState(); break;
+        case( MainStateMachine::INIT_STATE  ) : mainState.initState();   break;
+        case( MainStateMachine::IDLE_STATE  ) : mainState.idleState();   break;
+        case( MainStateMachine::DECODE_STATE ): mainState.decodeState(); break;
     }
 }
