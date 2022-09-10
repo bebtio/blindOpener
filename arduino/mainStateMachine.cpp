@@ -1,6 +1,14 @@
+//***************************************//
+// Author:  Alberto Heras
+// Date:    10 September 2022
+// Purpose: 
+//***************************************//
 
+// This library comes from the git repository at: https://github.com/Arduino-IRremote/Arduino-IRremote
+// Make sure to install this before running.
 #include <IRremote.h>
-#include "programStates.hpp"
+
+#include "mainStateMachine.hpp"
 
 
 

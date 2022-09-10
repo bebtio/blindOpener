@@ -1,9 +1,15 @@
+//***************************************//
+// Author:  Alberto Heras
+// Date:    10 September 2022
+// Purpose: 
+//***************************************//
+
 #ifndef PROGRAMSTATES_HPP
 #define PROGRAMSTATES_HPP
 
 #include <Arduino.h>
 #include <HardwareSerial.h>
-#include "irRemoteButtonDefines.hpp"
+#include "irRemote.hpp"
 
 // The main functions that do the operations for each of the defined states.
 

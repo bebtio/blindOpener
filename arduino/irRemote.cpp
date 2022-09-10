@@ -1,4 +1,10 @@
-#include "irRemoteButtonDefines.hpp"
+//***************************************//
+// Author:  Alberto Heras
+// Date:    10 September 2022
+// Purpose: 
+//***************************************//
+
+#include "irRemote.hpp"
 
 
 //**************************************************************//

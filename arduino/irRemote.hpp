@@ -1,5 +1,11 @@
-#ifndef IRREMOTEBUTTONDEFINES_HPP
-#define IRREMOTEBUTTONDEFINES_HPP
+//***************************************//
+// Author:  Alberto Heras
+// Date:    10 September 2022
+// Purpose: 
+//***************************************//
+
+#ifndef IRREMOTE_HPP
+#define IRREMOTE_HPP
 
 #include <Arduino.h>
 #include <stdint.h>

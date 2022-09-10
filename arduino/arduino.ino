@@ -1,17 +1,31 @@
 
-#include "programStates.hpp"
+//***************************************//
+// Author:  Alberto Heras
+// Date:    10 September 2022
+// Purpose: 
+//***************************************//
+
+#include "mainStateMachine.hpp"
 
 
+//***************************************//
+// Declare the MainStateMachine variable.
+// This controls everything that happens.
+//***************************************//
 MainStateMachine mainState;
 
+//***************************************//
 // Don't use set up. We are going to handle all the setup in the
 // INIT_STATE in the loop.
+//***************************************//
 void setup()
 {
 
 }
 
-
+//***************************************//
+// The main loop where everything happens.
+//***************************************//
 void loop()
 {
     // Main state machine goes here.
@@ -22,3 +36,5 @@ void loop()
         case( MainStateMachine::DECODE_STATE ): mainState.decodeState(); break;
     }
 }
+
+//***************************************//
