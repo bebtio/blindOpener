@@ -2,6 +2,7 @@
 #include <IRremote.h>
 #include "programStates.hpp"
 
+const int IR_PIN = 2;
 
 //************************************************************//
 // initState- initializes the digital inputs for the IR receiver.
@@ -12,7 +13,7 @@ void MainStateMachine::initState()
 {
 
     // Initialize the receiver library to read from pin 2.
-    IrReceiver.begin(2);
+    IrReceiver.begin( IR_PIN );
 
     // Set serial output for debugging.
     Serial.begin(9600);
