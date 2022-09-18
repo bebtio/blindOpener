@@ -25,8 +25,8 @@ void MainStateMachine::initState()
     
 
     // Initialize motor.
-    stpper.init();
-    
+    stepper.init();
+
     // Set serial output for debugging.
     Serial.begin(9600);
     Serial.println("In INIT_STATE");

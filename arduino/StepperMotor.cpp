@@ -23,11 +23,11 @@ StepperMotor::init()
     // these are outputs in the eyes of the arduino NANO.
     // This class CONTROLS the EasyDriver board instead of 
     // being the EasyDriver board... Hope that makes sense later.
-    // pinMode(STEP_PIN,  OUTPUT);
-    // pinMode(DIR_PIN,   OUTPUT);
-    // pinMode(MS1_PIN,   OUTPUT);
-    // pinMode(MS2_PIN,   OUTPUT);
-    // pinMode(SLEEP_PIN, OUTPUT);
+    pinMode(STEP_PIN,  OUTPUT);
+    pinMode(DIR_PIN,   OUTPUT);
+    pinMode(MS1_PIN,   OUTPUT);
+    pinMode(MS2_PIN,   OUTPUT);
+    pinMode(SLEEP_PIN, OUTPUT);
 
     // Give it some initial settings.
     setStepDirection( CLOCKWISE );
@@ -39,7 +39,7 @@ StepperMotor::init()
 // clockwise or coutner clockwise.
 //************************************************************//
 void 
-StepperMotor::setDirection( StepDirection direction )
+StepperMotor::setStepDirection( StepDirection direction )
 {
     switch (direction)
     {

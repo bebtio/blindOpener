@@ -5,6 +5,7 @@
 // The defines are what they are labeled on the board.
 // Their values are what they are in code.
 
+#include <Arduino.h>
 // Digital only pins. 
 #define D2   2 
 #define D3   3 
