@@ -27,7 +27,6 @@ StepperMotor::init()
     pinMode(DIR_PIN,   OUTPUT);
     pinMode(MS1_PIN,   OUTPUT);
     pinMode(MS2_PIN,   OUTPUT);
-    pinMode(SLEEP_PIN, OUTPUT);
 
     // Give it some initial settings.
     setStepDirection( CLOCKWISE );
@@ -43,8 +42,8 @@ StepperMotor::setStepDirection( StepDirection direction )
 {
     switch (direction)
     {
-        case CLOCKWISE:          /* setClockwise() */      break;
-        case COUNTER_CLOCKWISE: /* setCounterClockwise()*/ break;
+        case CLOCKWISE:         setClockwise();        break;
+        case COUNTER_CLOCKWISE: setCounterClockwise(); break;
     }
 }
 
@@ -63,7 +62,7 @@ StepperMotor::setStepSpeed( StepSpeed speed )
         case EIGHTH_STEP:  setEighthStep();  break;
     }
 }
-
+    
 //************************************************************//
 // step - Steps the stepper motor by 1 step in the specified 
 // direction at the specified speed.
@@ -78,14 +77,41 @@ StepperMotor::step()
 }
 
 
+//*************************//
+// Private functions below //
+//*************************//
+
+
+//************************************************************//
+// setClockwise() - the direction of HIGH and low depend on how
+// you plug in the motor. Going to need to experiment to figure
+// which LOGIC value sets what direction.
+//************************************************************//
+void 
+StepperMotor::setClockwise()
+{
+    digitalWrite(DIR_PIN, HIGH);
+}
+
+//************************************************************//
+// setCounterClockwise() - the direction of HIGH and low depend on how
+// you plug in the motor. Going to need to experiment to figure
+// which LOGIC value sets what direction.
+//************************************************************//
+void 
+StepperMotor::setCounterClockwise()
+{
+    digitalWrite(DIR_PIN, LOW);
+}
+
 //************************************************************//
 // setFullStep - Sets MS1 and MS2 to use FULL_STEP
 //************************************************************//
 void 
 StepperMotor::setFullStep()
 {
-    // digitalWrite( MS1_PIN, LOW );
-    // digitalWrite( MS2_PIN, LOW );
+    digitalWrite( MS1_PIN, LOW );
+    digitalWrite( MS2_PIN, LOW );
 }
 
 //************************************************************//
@@ -94,8 +120,8 @@ StepperMotor::setFullStep()
 void 
 StepperMotor::setHalfStep()
 {
-    // digitalWrite( MS1_PIN, HIGH );
-    // digitalWrite( MS2_PIN, LOW );
+    digitalWrite( MS1_PIN, HIGH );
+    digitalWrite( MS2_PIN, LOW );
 }
 
 //************************************************************//
@@ -104,8 +130,8 @@ StepperMotor::setHalfStep()
 void 
 StepperMotor::setQuarterStep()
 {
-    // digitalWrite( MS1_PIN, LOW );
-    // digitalWrite( MS2_PIN, HIGH );
+    digitalWrite( MS1_PIN, LOW );
+    digitalWrite( MS2_PIN, HIGH );
 }
 
 //************************************************************//
@@ -114,6 +140,6 @@ StepperMotor::setQuarterStep()
 void 
 StepperMotor::setEighthStep()
 {
-    // digitalWrite( MS1_PIN, HIGH );
-    // digitalWrite( MS2_PIN, HIGH );
+    digitalWrite( MS1_PIN, HIGH );
+    digitalWrite( MS2_PIN, HIGH );
 }

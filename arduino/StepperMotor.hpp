@@ -9,7 +9,6 @@
  #define DIR_PIN   D4
  #define MS1_PIN   D5 
  #define MS2_PIN   D6 
- #define SLEEP_PIN D7 
 
 class StepperMotor
 {
@@ -47,6 +46,9 @@ public:
     void step();
 
 private:
+
+    void setClockwise();
+    void setCounterClockwise();
 
     void setFullStep();
     void setHalfStep();
