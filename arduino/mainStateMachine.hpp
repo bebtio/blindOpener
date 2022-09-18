@@ -10,6 +10,7 @@
 #include <Arduino.h>
 #include <HardwareSerial.h>
 #include "irRemote.hpp"
+#include "StepperMotor.hpp"
 
 // The main functions that do the operations for each of the defined states.
 
@@ -21,7 +22,6 @@ class MainStateMachine
 {
 
 public:
-
   // The state enum.
   enum State 
   {
@@ -57,6 +57,9 @@ public:
   void sleepState();
   
 private:
+
+  // An instance of stepper motor to control the stepper motor.
+  StepperMotor stepper;
 
   // Holds currentState and previous state in case
   // we have special jumps depending on previous state.

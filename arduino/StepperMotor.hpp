@@ -3,13 +3,11 @@
 
 // Make these all defines to save on memory.
 // TODO: figure out what these will be set to on the board.
-// #define STEP_PIN
-// #define DIR_PIN
-// 
-// #define MS1_PIN
-// #define MS2_PIN
-// 
-// #define SLEEP_PIN
+// #define STEP_PIN  D3  
+// #define DIR_PIN   D4
+// #define MS1_PIN   D5 
+// #define MS2_PIN   D6 
+// #define SLEEP_PIN D7 
 
 class StepperMotor
 {
@@ -48,6 +46,10 @@ public:
 
 private:
 
+    void setFullStep();
+    void setHalfStep();
+    void setQuarterStep();
+    void setEighthStep();
 };
 
 #endif // _STEPPERMOTOR_HPP_

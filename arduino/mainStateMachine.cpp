@@ -22,8 +22,10 @@ void MainStateMachine::initState()
 
     // Initialize the receiver library to read from pin 2.
     IrReceiver.begin(IRremote::IR_PIN);
+    
 
-    // TODO: Initialize motor.
+    // Initialize motor.
+    stpper.init();
     
     // Set serial output for debugging.
     Serial.begin(9600);

@@ -19,7 +19,19 @@ StepperMotor::StepperMotor()
 void 
 StepperMotor::init()
 {
+    // The reason these aren't defined as inputs is because
+    // these are outputs in the eyes of the arduino NANO.
+    // This class CONTROLS the EasyDriver board instead of 
+    // being the EasyDriver board... Hope that makes sense later.
+    // pinMode(STEP_PIN,  OUTPUT);
+    // pinMode(DIR_PIN,   OUTPUT);
+    // pinMode(MS1_PIN,   OUTPUT);
+    // pinMode(MS2_PIN,   OUTPUT);
+    // pinMode(SLEEP_PIN, OUTPUT);
 
+    // Give it some initial settings.
+    setStepDirection( CLOCKWISE );
+    setStepSpeed( FULL_STEP );
 }
 
 //************************************************************//
@@ -45,10 +57,10 @@ StepperMotor::setStepSpeed( StepSpeed speed )
 {
     switch (speed)
     {
-        case FULL_STEP:    /* setFullStep();   */ break;
-        case HALF_STEP:    /* setQuarterStep();*/ break;
-        case QUARTER_STEP: /* setQuarterStep();*/ break;
-        case EIGHTH_STEP:  /* setEighthStep(); */ break;
+        case FULL_STEP:    setFullStep();    break;
+        case HALF_STEP:    setQuarterStep(); break;
+        case QUARTER_STEP: setQuarterStep(); break;
+        case EIGHTH_STEP:  setEighthStep();  break;
     }
 }
 
@@ -59,5 +71,49 @@ StepperMotor::setStepSpeed( StepSpeed speed )
 void 
 StepperMotor::step()
 {
+    // Steps the motor whenever there is a change from
+    // LOW to HIGH on the pin. 
+    // digitalWrite(STEP_PIN, HIGH);
+    // digitalWrite(STEP_PIN, LOW );
+}
 
+
+//************************************************************//
+// setFullStep - Sets MS1 and MS2 to use FULL_STEP
+//************************************************************//
+void 
+StepperMotor::setFullStep()
+{
+    // digitalWrite( MS1_PIN, LOW );
+    // digitalWrite( MS2_PIN, LOW );
+}
+
+//************************************************************//
+// setHalfStep - Sets MS1 and MS2 to use HALF_STEP
+//************************************************************//
+void 
+StepperMotor::setHalfStep()
+{
+    // digitalWrite( MS1_PIN, HIGH );
+    // digitalWrite( MS2_PIN, LOW );
+}
+
+//************************************************************//
+// setQuarterStep - Sets MS1 and MS2 to use QUARTER_STEP
+//************************************************************//
+void 
+StepperMotor::setQuarterStep()
+{
+    // digitalWrite( MS1_PIN, LOW );
+    // digitalWrite( MS2_PIN, HIGH );
+}
+
+//************************************************************//
+// setEighthStep - Sets MS1 and MS2 to use EIGHTH_STEP
+//************************************************************//
+void 
+StepperMotor::setEighthStep()
+{
+    // digitalWrite( MS1_PIN, HIGH );
+    // digitalWrite( MS2_PIN, HIGH );
 }
