@@ -1,10 +1,15 @@
 #ifndef _STEPPERMOTOR_HPP_
 #define _STEPPERMOTOR_HPP_
 
-// TODO: figure out which logic value defines the motor step direction 
-//#define CLOCKWISE
-// TODO: figure out which logic value defines the motor step direction 
-//#define COUNTERCLOCKWISE
+// Make these all defines to save on memory.
+// TODO: figure out what these will be set to on the board.
+// #define STEP_PIN
+// #define DIR_PIN
+// 
+// #define MS1_PIN
+// #define MS2_PIN
+// 
+// #define SLEEP_PIN
 
 class StepperMotor
 {
@@ -40,7 +45,7 @@ public:
     void setDirection(  StepDirection direction );
     void step();
     void setStepSpeed( StepSpeed speed );
-    
+
 private:
 
 };
