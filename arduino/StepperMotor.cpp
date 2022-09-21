@@ -27,10 +27,12 @@ StepperMotor::init()
     pinMode(DIR_PIN,   OUTPUT);
     pinMode(MS1_PIN,   OUTPUT);
     pinMode(MS2_PIN,   OUTPUT);
+    pinMode(ENABLE_PIN, OUTPUT );
 
     // Give it some initial settings.
     setStepDirection( CLOCKWISE );
     setStepSpeed( FULL_STEP );
+    digitalWrite( ENABLE_PIN, LOW );
 }
 
 //************************************************************//
@@ -68,12 +70,17 @@ StepperMotor::setStepSpeed( StepSpeed speed )
 // direction at the specified speed.
 //************************************************************//
 void 
-StepperMotor::step()
+StepperMotor::step(size_t numSteps)
 {
     // Steps the motor whenever there is a change from
     // LOW to HIGH on the pin. 
-    // digitalWrite(STEP_PIN, HIGH);
-    // digitalWrite(STEP_PIN, LOW );
+    for ( size_t curStep(0); curStep < numSteps; ++curStep  )
+    {
+      digitalWrite(STEP_PIN, HIGH);
+      delay(1);
+      digitalWrite(STEP_PIN, LOW );
+      delay(1);
+    }
 }
 
 
@@ -130,7 +137,7 @@ StepperMotor::setHalfStep()
 void 
 StepperMotor::setQuarterStep()
 {
-    digitalWrite( MS1_PIN, LOW );
+    digitalWrite( MS1_PIN, HIGH );
     digitalWrite( MS2_PIN, HIGH );
 }
 

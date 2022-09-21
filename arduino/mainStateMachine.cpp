@@ -64,29 +64,47 @@ void MainStateMachine::idleState()
 void MainStateMachine::decodeState()
 {   
     Serial.println( "DECODE_STATE" );
-
     // Pull the raw IR signal from the IrReceiver.
-    uint32_t irSignal( IrReceiver.decodedIRData.decodedRawData ); 
+    //uint32_t irSignal( IrReceiver.decodedIRData.decodedRawData ); 
 
     // Turn that signal into an enum for easier handling.
-    IRremote::RemoteStates state = IRremote::decodeIRSignal( irSignal );
-    Serial.println( IRremote::buttonStringMap[state] );
+    //IRremote::RemoteStates state = IRremote::decodeIRSignal( irSignal );
+    //Serial.println( IRremote::buttonStringMap[state] );
 
     // TODO: set the motor state variable to the current state.
     
     setState( MainStateMachine::MOTOR_CONTROL_STATE );  
-    delay(2000);
+    
 
     // Reset the IrReceiver contents to ready for a new signal.
-    IrReceiver.resume();
+    //IrReceiver.resume();
 }
 
 
 void MainStateMachine::motorControlState()
 {
   Serial.println( "MOTOR_CONTROL_STATE" );
-  
+  uint32_t irSignal( IrReceiver.decodedIRData.decodedRawData ); 
+  IrReceiver.resume();
+
+  IRremote::RemoteStates state = IRremote::decodeIRSignal( irSignal );
+
+  if( state == IRremote::UP_BUTTON )
+  {
+    Serial.println( "UP BUTTON PRESSED");
+    stepper.setStepDirection( StepperMotor::CLOCKWISE );
+    stepper.step(400);
+  }
+  else if( state == IRremote::DOWN_BUTTON )
+  {
+    Serial.println("DOWN BUTTON PRESSED");
+    stepper.setStepDirection( StepperMotor::COUNTER_CLOCKWISE );
+    stepper.step(400);
+  }
+
+  Serial.println( IRremote::buttonStringMap[state] );
   setState( MainStateMachine::IDLE_STATE );
+
 }
 //************************************************************//
 // sleepState() - Puts the arduino asleep after some time of

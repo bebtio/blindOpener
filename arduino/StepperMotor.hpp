@@ -5,11 +5,11 @@
 
 // Make these all defines to save on memory.
 // TODO: figure out what these will be set to on the board.
- #define STEP_PIN  D3  
- #define DIR_PIN   D4
- #define MS1_PIN   D5 
- #define MS2_PIN   D6 
-
+#define STEP_PIN   D3  
+#define DIR_PIN    D4
+#define MS1_PIN    D5 
+#define MS2_PIN    D6 
+#define ENABLE_PIN D7
 class StepperMotor
 {
 public:
@@ -43,7 +43,7 @@ public:
     void init();
     void setStepDirection( StepDirection direction );
     void setStepSpeed( StepSpeed speed );
-    void step();
+    void step( size_t numSteps = 50 );
 
 private:
 
