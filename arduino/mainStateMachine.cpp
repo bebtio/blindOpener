@@ -21,7 +21,6 @@ void MainStateMachine::initState()
     // Initialize the receiver library to read from pin 2.
     IrReceiver.begin(IRremoteStates::IR_PIN);
 
-
     // Initialize motor.
     stepper.init();
 
@@ -44,7 +43,7 @@ void MainStateMachine::idleState()
 {
     Serial.println("In IDLE_STATE");
 
-    // Do nothing until we receive a singal to decode.
+    // Do nothing until we receive a signal to decode.
     if( IrReceiver.decode() )
     {
         // Move to the decode state to get do something
