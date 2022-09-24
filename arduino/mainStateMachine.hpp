@@ -22,49 +22,51 @@ class MainStateMachine
 {
 
 public:
-  // The state enum.
-  enum State 
-  {
-      INIT_STATE,
-      IDLE_STATE,
-      DECODE_STATE,
-      MOTOR_CONTROL_STATE,
-      SLEEP_STATE
-  };
+    // The state enum.
+    enum State 
+    {
+        INIT_STATE,
+        IDLE_STATE,
+        DECODE_STATE,
+        MOTOR_CLOCKWISE_STATE,
+        MOTOR_COUNTERCLOCKWISE_STATE,
+        SLEEP_STATE
+    };
 
   
-  MainStateMachine() : 
-  currentState( INIT_STATE ), 
-  previousState( INIT_STATE ) 
-  {}
+    MainStateMachine() : 
+    currentState( INIT_STATE ), 
+    previousState( INIT_STATE ) 
+    {}
 
-  // Set state makes it easy to update both the current and previous state.
-  void setState( State state )
-  {
-    previousState = currentState;
-    currentState = state;
-  }
+    // Set state makes it easy to update both the current and previous state.
+    void setState( State state )
+    {
+        previousState = currentState;
+        currentState = state;
+    }
 
-  // Getters
-  State getCurrentState()  { return( currentState );  }
-  State getPreviousState() { return( previousState ); }
+    // Getters
+    State getCurrentState()  { return( currentState );  }
+    State getPreviousState() { return( previousState ); }
 
-  // State functions
-  void initState();
-  void idleState();
-  void decodeState();
-  void motorControlState();
-  void sleepState();
+    // State functions
+    void initState();
+    void idleState();
+    void decodeState();
+    void motorClockwiseState();
+    void motorCounterClockwiseState();
+    void sleepState();
   
 private:
 
-  // An instance of stepper motor to control the stepper motor.
-  StepperMotor stepper;
+    // An instance of stepper motor to control the stepper motor.
+    StepperMotor stepper;
 
-  // Holds currentState and previous state in case
-  // we have special jumps depending on previous state.
-  State currentState;
-  State previousState;
+    // Holds currentState and previous state in case
+    // we have special jumps depending on previous state.
+    State currentState;
+    State previousState;
 
 };
 

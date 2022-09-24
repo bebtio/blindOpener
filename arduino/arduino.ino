@@ -31,10 +31,12 @@ void loop()
     // Main state machine goes here.
     switch( mainState.getCurrentState() )
     {
-        case( MainStateMachine::INIT_STATE          ): mainState.initState();         break;
-        case( MainStateMachine::IDLE_STATE          ): mainState.idleState();         break;
-        case( MainStateMachine::DECODE_STATE        ): mainState.decodeState();       break;
-        case( MainStateMachine::MOTOR_CONTROL_STATE ): mainState.motorControlState(); break;
+        case( MainStateMachine::INIT_STATE                   ): mainState.initState();                  break;
+        case( MainStateMachine::IDLE_STATE                   ): mainState.idleState();                  break;
+        case( MainStateMachine::DECODE_STATE                 ): mainState.decodeState();                break;
+        case( MainStateMachine::MOTOR_CLOCKWISE_STATE        ): mainState.motorClockwiseState();        break;
+        case( MainStateMachine::MOTOR_COUNTERCLOCKWISE_STATE ): mainState.motorCounterClockwiseState(); break;
+        case( MainStateMachine::SLEEP_STATE                  ): /* not implemented yet */               break;
     }
 }
 

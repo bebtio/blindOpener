@@ -11,7 +11,6 @@
 #include "mainStateMachine.hpp"
 
 
-
 //************************************************************//
 // initState - initializes the digital inputs for the IR receiver.
 //
@@ -19,10 +18,9 @@
 //************************************************************//
 void MainStateMachine::initState()
 {
-
     // Initialize the receiver library to read from pin 2.
     IrReceiver.begin(IRremoteStates::IR_PIN);
-    
+
 
     // Initialize motor.
     stepper.init();
@@ -56,56 +54,70 @@ void MainStateMachine::idleState()
 }
 
 //************************************************************//
-// blinkState - Turns on the built in led. Does this when the IR
-// receiver detects any kind of input.
+// decodeState - 
 //
 //
 //************************************************************//
 void MainStateMachine::decodeState()
 {   
     Serial.println( "DECODE_STATE" );
-    // Pull the raw IR signal from the IrReceiver.
-    //uint32_t irSignal( IrReceiver.decodedIRData.decodedRawData ); 
 
-    // Turn that signal into an enum for easier handling.
-    //IRremote::RemoteStates state = IRremote::decodeIRSignal( irSignal );
-    //Serial.println( IRremote::buttonStringMap[state] );
+    uint32_t irSignal( IrReceiver.decodedIRData.decodedRawData ); 
+    IrReceiver.resume();
 
-    // TODO: set the motor state variable to the current state.
-    
-    setState( MainStateMachine::MOTOR_CONTROL_STATE );  
-    
+    IRremoteStates::RemoteStates state = IRremoteStates::decodeIRSignal( irSignal );
 
-    // Reset the IrReceiver contents to ready for a new signal.
-    //IrReceiver.resume();
+    // Define a state for every possible input. Could just fall through to IDLE_STATE
+    // if not UP_BUTTON or DOWN_BUTTON instead.
+    switch( state )
+    {
+        case( IRremoteStates::POWER_BUTTON ):  setState( IDLE_STATE );                   break;
+        case( IRremoteStates::A_BUTTON ):      setState( IDLE_STATE );                   break;
+        case( IRremoteStates::B_BUTTON ):      setState( IDLE_STATE );                   break;
+        case( IRremoteStates::C_BUTTON ):      setState( IDLE_STATE );                   break;
+        case( IRremoteStates::UP_BUTTON ):     setState( MOTOR_CLOCKWISE_STATE );        break;
+        case( IRremoteStates::RIGHT_BUTTON ):  setState( IDLE_STATE );                   break;
+        case( IRremoteStates::DOWN_BUTTON ):   setState( MOTOR_COUNTERCLOCKWISE_STATE ); break;
+        case( IRremoteStates::LEFT_BUTTON ):   setState( IDLE_STATE );                   break;
+        case( IRremoteStates::CENTER_BUTTON ): setState( IDLE_STATE );                   break;
+        case( IRremoteStates::NONE ):          setState( IDLE_STATE );                   break;
+    }
 }
 
-
-void MainStateMachine::motorControlState()
+//************************************************************//
+// motorClockwiseState() - 
+//
+//
+//************************************************************//
+void MainStateMachine::motorClockwiseState()
 {
-  Serial.println( "MOTOR_CONTROL_STATE" );
-  uint32_t irSignal( IrReceiver.decodedIRData.decodedRawData ); 
-  IrReceiver.resume();
+    Serial.println( "MOTOR_CLOCKWISE_STATE" );
 
-  IRremoteStates::RemoteStates state = IRremoteStates::decodeIRSignal( irSignal );
-
-  if( state == IRremoteStates::UP_BUTTON )
-  {
-    Serial.println( "UP BUTTON PRESSED");
+    // Tell the stepper motor what to do.
     stepper.setStepDirection( StepperMotor::CLOCKWISE );
     stepper.step(400);
-  }
-  else if( state == IRremoteStates::DOWN_BUTTON )
-  {
-    Serial.println("DOWN BUTTON PRESSED");
+
+    // Return to IDLE_STATE for next command.
+    setState( MainStateMachine::IDLE_STATE );
+}
+
+//************************************************************//
+// motorCounterClockwiseState() - 
+//
+//
+//************************************************************//
+void MainStateMachine::motorCounterClockwiseState()
+{
+    Serial.println( "MOTOR_COUNTERCLOCKWISE_STATE" );
+
+    // Tell stepper motor what to do.
     stepper.setStepDirection( StepperMotor::COUNTER_CLOCKWISE );
     stepper.step(400);
-  }
 
-  Serial.println( IRremoteStates::buttonStringMap[state] );
-  setState( MainStateMachine::IDLE_STATE );
-
+    // Return to IDLE_STATE for next command.
+    setState( MainStateMachine::IDLE_STATE );
 }
+  
 //************************************************************//
 // sleepState() - Puts the arduino asleep after some time of
 // inactivity.
