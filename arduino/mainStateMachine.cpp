@@ -21,7 +21,7 @@ void MainStateMachine::initState()
 {
 
     // Initialize the receiver library to read from pin 2.
-    IrReceiver.begin(IRremote::IR_PIN);
+    IrReceiver.begin(IRremoteStates::IR_PIN);
     
 
     // Initialize motor.
@@ -87,22 +87,22 @@ void MainStateMachine::motorControlState()
   uint32_t irSignal( IrReceiver.decodedIRData.decodedRawData ); 
   IrReceiver.resume();
 
-  IRremote::RemoteStates state = IRremote::decodeIRSignal( irSignal );
+  IRremoteStates::RemoteStates state = IRremoteStates::decodeIRSignal( irSignal );
 
-  if( state == IRremote::UP_BUTTON )
+  if( state == IRremoteStates::UP_BUTTON )
   {
     Serial.println( "UP BUTTON PRESSED");
     stepper.setStepDirection( StepperMotor::CLOCKWISE );
     stepper.step(400);
   }
-  else if( state == IRremote::DOWN_BUTTON )
+  else if( state == IRremoteStates::DOWN_BUTTON )
   {
     Serial.println("DOWN BUTTON PRESSED");
     stepper.setStepDirection( StepperMotor::COUNTER_CLOCKWISE );
     stepper.step(400);
   }
 
-  Serial.println( IRremote::buttonStringMap[state] );
+  Serial.println( IRremoteStates::buttonStringMap[state] );
   setState( MainStateMachine::IDLE_STATE );
 
 }

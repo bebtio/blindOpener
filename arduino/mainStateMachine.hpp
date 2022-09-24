@@ -9,7 +9,7 @@
 
 #include <Arduino.h>
 #include <HardwareSerial.h>
-#include "irRemote.hpp"
+#include "IRremoteStates.hpp"
 #include "StepperMotor.hpp"
 
 // The main functions that do the operations for each of the defined states.

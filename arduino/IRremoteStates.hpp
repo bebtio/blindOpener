@@ -16,7 +16,7 @@
 //
 //
 //******************************************************//
-namespace IRremote
+namespace IRremoteStates
 {
 
     // The pin that will be hooked up to the IR receiver.
