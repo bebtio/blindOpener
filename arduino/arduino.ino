@@ -36,7 +36,7 @@ void loop()
         case( MainStateMachine::DECODE_STATE                 ): mainState.decodeState();                break;
         case( MainStateMachine::MOTOR_CLOCKWISE_STATE        ): mainState.motorClockwiseState();        break;
         case( MainStateMachine::MOTOR_COUNTERCLOCKWISE_STATE ): mainState.motorCounterClockwiseState(); break;
-        case( MainStateMachine::SLEEP_STATE                  ): /* not implemented yet */               break;
+        case( MainStateMachine::SLEEP_STATE                  ): mainState.sleepState();                 break;
     }
 }
 

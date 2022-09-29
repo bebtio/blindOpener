@@ -10,6 +10,8 @@
 #define MS1_PIN    D5 
 #define MS2_PIN    D6 
 #define ENABLE_PIN D7
+#define SLEEP_PIN  D8
+
 class StepperMotor
 {
 public:
@@ -44,9 +46,12 @@ public:
     void setStepDirection( StepDirection direction );
     void setStepSpeed( StepSpeed speed );
     void step( size_t numSteps = 50 );
+    void setSleepMode( bool on );
+    bool isSleepModeSet() { return( isAsleep ); }
 
 private:
 
+    bool isAsleep;
     void setClockwise();
     void setCounterClockwise();
 

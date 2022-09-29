@@ -23,15 +23,18 @@ StepperMotor::init()
     // these are outputs in the eyes of the arduino NANO.
     // This class CONTROLS the EasyDriver board instead of 
     // being the EasyDriver board... Hope that makes sense later.
-    pinMode(STEP_PIN,  OUTPUT);
-    pinMode(DIR_PIN,   OUTPUT);
-    pinMode(MS1_PIN,   OUTPUT);
-    pinMode(MS2_PIN,   OUTPUT);
-    pinMode(ENABLE_PIN, OUTPUT );
+    pinMode( STEP_PIN,   OUTPUT );
+    pinMode( DIR_PIN,    OUTPUT );
+    pinMode( MS1_PIN,    OUTPUT );
+    pinMode( MS2_PIN,    OUTPUT );
+    pinMode( SLEEP_PIN,  OUTPUT );
+    pinMode( ENABLE_PIN, OUTPUT );
 
+    
     // Give it some initial settings.
+    setSleepMode( false );
     setStepDirection( CLOCKWISE );
-    setStepSpeed( FULL_STEP );
+    setStepSpeed( EIGHTH_STEP ); // Default value
     digitalWrite( ENABLE_PIN, LOW );
 }
 
@@ -81,6 +84,26 @@ StepperMotor::step(size_t numSteps)
       digitalWrite(STEP_PIN, LOW );
       delay(1);
     }
+}
+
+
+void 
+StepperMotor::setSleepMode( bool on )
+{
+  // If we want the stepper motor to go into sleep mode
+  // turn it on.
+  if( on == true )
+  {
+    digitalWrite( SLEEP_PIN, LOW );
+    isAsleep = true;
+  }
+  else
+  {
+    digitalWrite( SLEEP_PIN, HIGH );
+    isAsleep = false;
+  }
+  
+  
 }
 
 

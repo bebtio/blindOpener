@@ -70,7 +70,7 @@ void MainStateMachine::decodeState()
     // if not UP_BUTTON or DOWN_BUTTON instead.
     switch( state )
     {
-        case( IRremoteStates::POWER_BUTTON ):  setState( IDLE_STATE );                   break;
+        case( IRremoteStates::POWER_BUTTON ):  setState( SLEEP_STATE );                  break;
         case( IRremoteStates::A_BUTTON ):      setState( IDLE_STATE );                   break;
         case( IRremoteStates::B_BUTTON ):      setState( IDLE_STATE );                   break;
         case( IRremoteStates::C_BUTTON ):      setState( IDLE_STATE );                   break;
@@ -125,7 +125,24 @@ void MainStateMachine::motorCounterClockwiseState()
 //************************************************************//
 void MainStateMachine::sleepState()
 {
-  
+    Serial.println( "SLEEP_STATE" );
+
+    // Set the motor sleep mode to on.
+    if( stepper.isSleepModeSet() == true )
+    {
+      stepper.setSleepMode( false );    
+    }
+    else
+    {
+      stepper.setSleepMode( true );
+    }
+    // Enable an interrupt on the IR pin to wake it back up on 
+    // receive.
+
+    // Enable sleep mode.
+
+    // Set state to IDLE_STATE
+    setState( MainStateMachine::IDLE_STATE );
 }
 
 
